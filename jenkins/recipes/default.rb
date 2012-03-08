@@ -189,13 +189,18 @@ end
 if node.platform == "ubuntu"
   execute "setup-jenkins" do
     command "echo w00t"
-    notifies :stop, "service[jenkins]", :immediately
-    notifies :create, "ruby_block[netstat]", :immediately #wait a moment for the port to be released
-    notifies :install, "package[jenkins]", :immediately
+    # notifies :stop, "service[jenkins]", :immediately
+    notifies :stop, resources(:service => "jenkins"), :immediately
+    # notifies :create, "ruby_block[netstat]", :immediately #wait a moment for the port to be released
+    notifies :create, resources(:ruby_block => "netstat"), :immediately
+    # notifies :install, "package[jenkins]", :immediately
+    notifies :install, resources(:package => "jenkins"), :immediately
     unless install_starts_service
-      notifies :start, "service[jenkins]", :immediately
+      #notifies :start, "service[jenkins]", :immediately
+      notifies :start, resources(:service => "jenkins"), :immediately
     end
-    notifies :create, "ruby_block[block_until_operational]", :immediately
+    #notifies :create, "ruby_block[block_until_operational]", :immediately
+    notifies :create, resources(:ruby_block => "block_until_operational"), :immediately
     creates "/usr/share/jenkins/jenkins.war"
   end
 else
@@ -204,12 +209,21 @@ else
   remote_file local do
     source remote
     backup false
-    notifies :stop, "service[jenkins]", :immediately
-    notifies :create, "ruby_block[netstat]", :immediately #wait a moment for the port to be released
-    notifies :run, "execute[add-jenkins-key]", :immediately
-    notifies :install, "package[jenkins]", :immediately
+    # notifies :stop, "service[jenkins]", :immediately
+    notifies :stop, resources(:service => "jenkins"), :immediately
+    
+    # notifies :create, "ruby_block[netstat]", :immediately #wait a moment for the port to be released
+    notifies :create, resources(:ruby_block => "netstat"), :immediately
+    
+    # notifies :run, "execute[add-jenkins-key]", :immediately
+    notifies :run, resources(:execute => "add-jenkins-key"), :immediately
+    #notifies :install, "package[jenkins]", :immediately
+    notifies :install, resources(:package => "jenkins"), :immediately
+    
     unless install_starts_service
-      notifies :start, "service[jenkins]", :immediately
+      # notifies :start, "service[jenkins]", :immediately
+      notifies :start, resources(:service => "jenkins"), :immediately
+      
     end
     if node[:jenkins][:server][:use_head] #XXX remove when CHEF-1848 is merged
       action :nothing
@@ -224,7 +238,8 @@ else
     if File.exists?(local)
       headers "If-Modified-Since" => File.mtime(local).httpdate
     end
-    notifies :create, "remote_file[#{local}]", :immediately
+    # notifies :create, "remote_file[#{local}]", :immediately
+    notifies :create, resources(:remote_file => local), :immediately
   end
 end
 
@@ -239,10 +254,14 @@ end
 # restart if this run only added new plugins
 log "plugins updated, restarting jenkins" do
   #ugh :restart does not work, need to sleep after stop.
-  notifies :stop, "service[jenkins]", :immediately
-  notifies :create, "ruby_block[netstat]", :immediately
-  notifies :start, "service[jenkins]", :immediately
-  notifies :create, "ruby_block[block_until_operational]", :immediately
+  #notifies :stop, "service[jenkins]", :immediately
+  notifies :stop, resources(:service => "jenkins"), :immediately
+  #notifies :create, "ruby_block[netstat]", :immediately
+  notifies :create, resources(:ruby_block => "netstat"), :immediately
+  #notifies :start, "service[jenkins]", :immediately
+  notifies :start, resources(:service => "jenkins"), :immediately
+  #notifies :create, "ruby_block[block_until_operational]", :immediately
+  notifies :create, resources(:ruby_block => "block_until_operational"), :immediately
   only_if do
     if File.exists?(pid_file)
       htime = File.mtime(pid_file)
