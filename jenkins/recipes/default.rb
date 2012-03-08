@@ -115,9 +115,8 @@ when "ubuntu", "debian"
 
     apt_repository "jenkins" do
       uri "http://pkg.jenkins-ci.org/debian"
-      distribution "binary/"
-      components [""]
       key "http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key"
+      components ["binary/"]
       action :add
     end
   end
@@ -188,11 +187,11 @@ end
 
 #this is defined after http_request/remote_file because the package
 #providers will throw an exception if `source' doesn't exist
-package "jenkins" do
-  provider package_provider
-  source local if node.platform != "ubuntu"
-  action :nothing
-end
+package "jenkins" #do
+  #provider package_provider
+  #source local if node.platform != "ubuntu"
+  #action :nothing
+#end
 
 if node.platform == "ubuntu"
   execute "setup-jenkins" do
