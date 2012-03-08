@@ -186,6 +186,14 @@ service "jenkins" do
   action :nothing
 end
 
+#this is defined after http_request/remote_file because the package
+#providers will throw an exception if `source' doesn't exist
+package "jenkins" do
+  provider package_provider
+  source local if node.platform != "ubuntu"
+  action :nothing
+end
+
 if node.platform == "ubuntu"
   execute "setup-jenkins" do
     command "echo w00t"
@@ -241,14 +249,6 @@ else
     # notifies :create, "remote_file[#{local}]", :immediately
     notifies :create, resources(:remote_file => local), :immediately
   end
-end
-
-#this is defined after http_request/remote_file because the package
-#providers will throw an exception if `source' doesn't exist
-package "jenkins" do
-  provider package_provider
-  source local if node.platform != "ubuntu"
-  action :nothing
 end
 
 # restart if this run only added new plugins
