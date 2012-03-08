@@ -106,7 +106,12 @@ when "ubuntu", "debian"
 
   when "ubuntu"
     include_recipe "apt"
-    include_recipe "java"
+    # include_recipe "java"
+    package "openjdk-6-dbg"
+    package "openjdk-6-jre"
+    package "openjdk-6-jdk"
+    package "openjdk-6-jre-lib"
+    package "openjdk-6-jre-headless"
 
     apt_repository "jenkins" do
       uri "http://pkg.jenkins-ci.org/debian"
