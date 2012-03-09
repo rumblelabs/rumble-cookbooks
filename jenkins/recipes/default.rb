@@ -242,11 +242,13 @@ end
 
 #this is defined after http_request/remote_file because the package
 #providers will throw an exception if `source' doesn't exist
-package "jenkins" do
-  provider package_provider
-  source local if node.platform != "ubuntu"
-  action :nothing
-end
+# package "jenkins"
+command "apt-get -q -y install jenkins--force-yes"
+# package "jenkins" do
+#   provider package_provider
+#   source local if node.platform != "ubuntu"
+#   action :nothing
+# end
 
 # restart if this run only added new plugins
 log "plugins updated, restarting jenkins" do
