@@ -5,6 +5,15 @@
 * TODO: **plugins** from custom JSON don't appear to be installed either...?
 
 
+
+## TEMPLATE JOBS
+
+It would be very useful to be able to have a template to create new jobs with just a few configurations...
+
+https://github.com/fabn/rails-jenkins-template
+
+
+
 Some useful urls
 
     http://reefpoints.dockyard.com/ruby/2012/03/05/our-ci-setup.html
