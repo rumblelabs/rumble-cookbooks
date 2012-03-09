@@ -111,7 +111,9 @@ when "ubuntu", "debian"
     package "openjdk-6-jdk"
     package "openjdk-6-jre-lib"
     package "openjdk-6-jre-headless"
-    command "wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -"
+    execute "jenkins-key" do
+      command "wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -"
+    end
 
     # RAILS TEST DEPENDENCIES
     package "libxslt-dev"
