@@ -113,6 +113,18 @@ when "ubuntu", "debian"
     package "openjdk-6-jre-lib"
     package "openjdk-6-jre-headless"
 
+    # RAILS TEST DEPENDENCIES
+    # 
+    # nokogiri
+    package "libxslt-dev"
+    package "libxml2-dev"
+    # rmagick
+    package "libmagick9-dev"
+    # mysql (test db)
+    # package "mysql-server"
+    # node (assets)
+    package "nodejs"
+
     apt_repository "jenkins" do
       uri "http://pkg.jenkins-ci.org/debian"
       distribution "binary/"
