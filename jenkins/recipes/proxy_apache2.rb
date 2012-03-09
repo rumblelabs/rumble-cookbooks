@@ -50,7 +50,8 @@ template "#{node[:apache][:dir]}/sites-available/jenkins" do
   )
 
   if File.exists?("#{node[:apache][:dir]}/sites-enabled/jenkins")
-    notifies  :restart, 'service[apache2]'
+    notifies :restart, resources(:service => "apache2"), :immediately
+    #notifies  :restart, 'service[apache2]'
   end
 end
 
