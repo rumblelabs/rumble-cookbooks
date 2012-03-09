@@ -93,16 +93,15 @@ when "ubuntu", "debian"
     package "openjdk-6-jre"
 
     package "psmisc"
-    key_url = "http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key"
-
-    remote_file "#{tmp}/jenkins-ci.org.key" do
-      source "#{key_url}"
-    end
-
-    execute "add-jenkins-key" do
-      command "apt-key add #{tmp}/jenkins-ci.org.key"
-      action :nothing
-    end
+    command "wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -"
+    #key_url = "http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key"
+    #remote_file "#{tmp}/jenkins-ci.org.key" do
+    #  source "#{key_url}"
+    #end
+    #execute "add-jenkins-key" do
+    #  command "apt-key add #{tmp}/jenkins-ci.org.key"
+    #  action :nothing
+    #end
 
   when "ubuntu"
     include_recipe "apt"
@@ -112,13 +111,13 @@ when "ubuntu", "debian"
     package "openjdk-6-jdk"
     package "openjdk-6-jre-lib"
     package "openjdk-6-jre-headless"
-
-    apt_repository "jenkins" do
-      uri "http://pkg.jenkins-ci.org/debian"
-      key "http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key"
-      components ["binary/"]
-      action :add
-    end
+    command "wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -"
+    #apt_repository "jenkins" do
+    #  uri "http://pkg.jenkins-ci.org/debian"
+    #  key "http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key"
+    #  components ["binary/"]
+    #  action :add
+    #end
   end
 
   pid_file = "/var/run/jenkins/jenkins.pid"
