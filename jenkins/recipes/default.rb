@@ -112,6 +112,13 @@ when "ubuntu", "debian"
     package "openjdk-6-jre-lib"
     package "openjdk-6-jre-headless"
     command "wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -"
+
+    # RAILS TEST DEPENDENCIES
+    package "libxslt-dev"
+    package "libxml2-dev"
+    package "libmagick9-dev"
+    package "nodejs"
+
     #apt_repository "jenkins" do
     #  uri "http://pkg.jenkins-ci.org/debian"
     #  key "http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key"
