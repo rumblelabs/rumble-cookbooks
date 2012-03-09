@@ -15,3 +15,6 @@ https://wiki.jenkins-ci.org/display/JENKINS/Github+OAuth+Plugin
 
 git config --global user.email "guardian@rumblelabs.com"
 git config --global user.name "Rumble Guardian"
+
+
+https://github.com/fnichol/chef-jenkins

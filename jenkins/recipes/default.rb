@@ -125,13 +125,14 @@ when "ubuntu", "debian"
     # node (assets)
     package "nodejs"
 
-    apt_repository "jenkins" do
-      uri "http://pkg.jenkins-ci.org/debian"
-      distribution "binary/"
-      components [""]
-      key "http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key"
-      action :add
-    end
+    command "wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -"
+    # apt_repository "jenkins" do
+    #   uri "http://pkg.jenkins-ci.org/debian"
+    #   distribution "binary/"
+    #   components [""]
+    #   key "http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key"
+    #   action :add
+    # end
   end
 
   pid_file = "/var/run/jenkins/jenkins.pid"
