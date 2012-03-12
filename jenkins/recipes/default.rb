@@ -273,7 +273,7 @@ end
 end
 
 #jenkins_cli "restart"
-
+include_recipe "jenkins::plugins"
 
 # restart if this run only added new plugins
 log "plugins updated, restarting jenkins" do
