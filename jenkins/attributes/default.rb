@@ -22,7 +22,7 @@
 #
 
 default[:jenkins][:mirror] = "http://updates.jenkins-ci.org"
-default[:jenkins][:java_home] = ENV['JAVA_HOME']
+default[:jenkins][:java_home] = "/usr"
 
 default[:jenkins][:server][:home] = "/var/lib/jenkins"
 default[:jenkins][:server][:user] = "jenkins"
