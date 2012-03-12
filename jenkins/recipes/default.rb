@@ -117,6 +117,7 @@ when "ubuntu", "debian"
 
     # RAILS TEST DEPENDENCIES
     package "libxml2-dev"
+    package "libxslt1-dev"
     # package "libmagick9-dev"
     package "libmagickwand-dev"
     package "nodejs"
