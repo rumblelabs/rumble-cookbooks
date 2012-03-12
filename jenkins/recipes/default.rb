@@ -262,8 +262,8 @@ else
   end
 end
 
-# , "gravatar"
-["git", "rake", "rubyMetrics", "ruby", "rvm", "openid", "performance", "github-api", "github", "hipchat"].each do |plugin|
+# , "gravatar" "rvm",
+["git", "rake", "rubyMetrics", "ruby", "openid", "performance", "github-api", "github", "hipchat"].each do |plugin|
   jenkins_cli "install-plugin #{plugin}"
 end
 
