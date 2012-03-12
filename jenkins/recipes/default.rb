@@ -286,14 +286,14 @@ log "plugins updated, restarting jenkins" do
   notifies :start, resources(:service => "jenkins"), :immediately
   #notifies :create, "ruby_block[block_until_operational]", :immediately
   notifies :create, resources(:ruby_block => "block_until_operational"), :immediately
-  only_if do
-    if File.exists?(pid_file)
-      htime = File.mtime(pid_file)
-      Dir["#{node[:jenkins][:server][:home]}/plugins/*.hpi"].select { |file|
-        File.mtime(file) > htime
-      }.size > 0
-    end
-  end
+  #only_if do
+  #  if File.exists?(pid_file)
+  #    htime = File.mtime(pid_file)
+  #    Dir["#{node[:jenkins][:server][:home]}/plugins/*.hpi"].select { |file|
+  #      File.mtime(file) > htime
+  #    }.size > 0
+  #  end
+  #end
 end
 
 # Front Jenkins with an HTTP server
