@@ -267,7 +267,7 @@ end
 end
 
 # Jenkins update centre has the derps with invalid json that's why I think these plugins 
-# can't be found ("gravatar" "rvm")
+# can't be found ("gravatar" "rvm")  http://updates.jenkins-ci.org/update-center.json
 ["http://updates.jenkins-ci.org/download/plugins/rvm/0.2/rvm.hpi", "http://updates.jenkins-ci.org/download/plugins/gravatar/1.1/gravatar.hpi"].each do |plugin|
   jenkins_cli "install-plugin #{plugin}"
 end
