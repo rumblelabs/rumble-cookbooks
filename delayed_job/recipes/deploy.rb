@@ -6,7 +6,7 @@ node[:deploy].each do |application, deploy|
     day     '*'
     month   '*'
     weekday '*'
-    command "cd #{deploy[:deploy_to]}/current && RAILS_ENV=#{deploy[:rails_env]} bundle exec rake jobs:work --queue=#{node[:delayed_job][:queue]}" 
+    command "cd #{deploy[:deploy_to]}/current && RAILS_ENV=#{deploy[:rails_env]} QUEUES=#{node[:delayed_job][:queue]} bundle exec rake jobs:work" 
     user deploy[:user]
     path "/usr/bin:/usr/local/bin:/bin"
   end
