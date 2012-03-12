@@ -212,7 +212,7 @@ if node.platform == "ubuntu"
     # notifies :install, "package[jenkins]", :immediately
     # notifies :install, resources(:package => "jenkins"), :immediately
 
-    command "wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war /usr/share/jenkins.war"
+    command "cd /usr/share/jenkins && wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war && mv jenkins.war.1 jenkins.war"
     
     unless install_starts_service
       #notifies :start, "service[jenkins]", :immediately
@@ -266,6 +266,7 @@ end
 ["git", "rake", "rubyMetrics", "ruby", "openid", "performance", "github-api", "github", "hipchat"].each do |plugin|
   jenkins_cli "install-plugin #{plugin}"
 end
+jenkins_cli "restart"
 
 
 # restart if this run only added new plugins
