@@ -210,7 +210,10 @@ if node.platform == "ubuntu"
     # notifies :create, "ruby_block[netstat]", :immediately #wait a moment for the port to be released
     notifies :create, resources(:ruby_block => "netstat"), :immediately
     # notifies :install, "package[jenkins]", :immediately
-    notifies :install, resources(:package => "jenkins"), :immediately
+    # notifies :install, resources(:package => "jenkins"), :immediately
+
+    command "wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war /usr/share/jenkins.war"
+    
     unless install_starts_service
       #notifies :start, "service[jenkins]", :immediately
       notifies :start, resources(:service => "jenkins"), :immediately
