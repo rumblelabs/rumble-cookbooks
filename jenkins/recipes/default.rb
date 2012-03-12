@@ -272,7 +272,7 @@ end
   jenkins_cli "install-plugin #{plugin}"
 end
 
-jenkins_cli "restart"
+#jenkins_cli "restart"
 
 
 # restart if this run only added new plugins
