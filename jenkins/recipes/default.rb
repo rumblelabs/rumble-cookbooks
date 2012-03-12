@@ -259,6 +259,11 @@ else
   end
 end
 
+["git", "rake", "rubyMetrics", "gravatar", "ruby", "rvm", "openid", "performance", "github-api", "github", "hipchat"].each do |plugin|
+  jenkins_cli "install-plugin #{plugin}"
+end
+
+
 # restart if this run only added new plugins
 log "plugins updated, restarting jenkins" do
   #ugh :restart does not work, need to sleep after stop.
@@ -287,3 +292,4 @@ when "nginx"
 when "apache2"
   include_recipe "jenkins::proxy_apache2"
 end
+
