@@ -60,8 +60,8 @@ end
 
 directory "/var/lib/jenkins/updates" do
   owner "jenkins"
-  group "nogroup"
-  mode  0644
+  group "jenkins"
+  mode  0755
   action :create
 end
 
@@ -73,7 +73,9 @@ end
 
 remote_file "/var/lib/jenkins/updates/default.json" do
   source "http://guardian.rumblelabs.com/jenkins-update-centre.json"
-  mode "0644"
+  owner "jenkins"
+  group "jenkins"
+  mode "0755"
 end
 
 execute "update-jenkins-plugin-data" do
