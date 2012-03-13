@@ -115,6 +115,9 @@ log "plugins updated, restarting jenkins" do
   #end
 end
 
+
+jenkins_cli "reload-configuration"
+
 # Front Jenkins with an HTTP server
 case node[:jenkins][:http_proxy][:variant]
 when "nginx"
