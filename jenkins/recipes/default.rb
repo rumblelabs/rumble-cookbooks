@@ -47,6 +47,7 @@ template "/etc/init/jenkins.conf" do
   )
 end
 
+
 template "/var/lib/jenkins/hudson.model.UpdateCenter.xml" do
   source      "jenkins.update_centre.erb"
   owner       'jenkins'
@@ -57,6 +58,12 @@ template "/var/lib/jenkins/hudson.model.UpdateCenter.xml" do
   )
 end
 
+directory "/var/lib/jenkins/updates" do
+  owner "jenkins"
+  group "nogroup"
+  mode  0644
+  action :create
+end
 
 remote_file "/var/lib/jenkins/updates/default.json" do
   source "http://guardian.rumblelabs.com/jenkins-update-centre.json"
