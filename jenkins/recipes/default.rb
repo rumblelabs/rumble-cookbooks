@@ -76,7 +76,7 @@ remote_file "/var/lib/jenkins/updates/default.json" do
   mode "0644"
 end
 
-log "update-jenkins-plugin-data" do
+execute "update-jenkins-plugin-data" do
   command "curl -X POST -H 'Accept: application/json' -d @/var/lib/jenkins/updates/default.json http://#{node[:fqdn]}:#{node[:jenkins][:server][:port]}/updateCenter/byId/default/postBack"
 end
 
