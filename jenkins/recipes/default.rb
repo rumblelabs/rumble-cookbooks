@@ -31,7 +31,7 @@ if node.platform == "ubuntu"
   end
 end
 
-log "update jenkins" do
+execute "update-jenkins" do
   command "cd /usr/share/jenkins && wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war && mv jenkins.war.1 jenkins.war"
 end
 
