@@ -42,6 +42,18 @@ template "/etc/init/jenkins.conf" do
   )
 end
 
+template "/var/lib/jenkins/hudson.model.UpdateCenter.xml" do
+  source      "jenkins.update_centre.erb"
+  owner       'jenkins'
+  group       'jenkins'
+  mode        '0644'
+  variables(
+    :update_centre     => default[:jenkins][:update_centre]
+  )
+end
+
+
+
 log "start-jenkins" do
   notifies :start, resources(:service => "jenkins"), :immediately
 end

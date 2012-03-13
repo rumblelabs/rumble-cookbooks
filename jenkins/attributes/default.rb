@@ -22,6 +22,7 @@
 #
 
 default[:jenkins][:mirror] = "http://updates.jenkins-ci.org"
+default[:jenkins][:update_centre] = "http://updates.jenkins-ci.org/update-center.json"
 default[:jenkins][:java_home] = "/usr"
 
 default[:jenkins][:server][:home] = "/var/lib/jenkins"
