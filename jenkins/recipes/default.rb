@@ -31,21 +31,21 @@ if node.platform == "ubuntu"
   end
 end
 
-execute "configure-jenkins" do
-  template "/etc/init/jenkins.conf" do
-    source      "jenkins.conf.erb"
-    owner       'root'
-    group       'root'
-    mode        '0644'
-    variables(
-      :jenkins_home     => node[:jenkins][:server][:home],
-      :java_home        => node[:jenkins][:java_home]
-    )
-  end
-  notifies :restart, resources(:service => "jenkins"), :immediately
-  notifies :create, resources(:ruby_block => "block_until_operational"), :immediately
-  creates "/etc/init/jenkins.conf"
+template "/etc/init/jenkins.conf" do
+  source      "jenkins.conf.erb"
+  owner       'root'
+  group       'root'
+  mode        '0644'
+  variables(
+    :jenkins_home     => node[:jenkins][:server][:home],
+    :java_home        => node[:jenkins][:java_home]
+  )
 end
+
+execute "start-jenkins" do
+  notifies :start, resources(:service => "jenkins"), :immediately
+end
+
 
   #http_request "HEAD #{remote}" do
   #  only_if { node[:jenkins][:server][:use_head] } #XXX remove when CHEF-1848 is merged
