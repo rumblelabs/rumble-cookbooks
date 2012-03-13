@@ -30,7 +30,7 @@ default[:jenkins][:server][:user] = "jenkins"
 
 case node[:platform]
 when "debian", "ubuntu"
-  default[:jenkins][:server][:group] = "jenkins"
+  default[:jenkins][:server][:group] = "nogroup"
 else
   default[:jenkins][:server][:group] = node[:jenkins][:server][:user]
 end
