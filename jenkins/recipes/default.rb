@@ -42,7 +42,7 @@ template "/etc/init/jenkins.conf" do
   )
 end
 
-execute "start-jenkins" do
+log "start-jenkins" do
   notifies :start, resources(:service => "jenkins"), :immediately
 end
 
