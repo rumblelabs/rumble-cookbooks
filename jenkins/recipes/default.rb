@@ -1,4 +1,4 @@
-install_starts_service = false
+install_starts_service = true
 include_recipe "jenkins::jenkins"
 
 #this is defined after http_request/remote_file because the package
