@@ -1,5 +1,5 @@
 execute "install-rvm" do
-  if File.exists?("/var/lib/jenkins/.rvm")
+  unless File.exists?("/var/lib/jenkins/.rvm")
     command "bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer)"
   end
 end
