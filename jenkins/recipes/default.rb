@@ -304,9 +304,16 @@ when "apache2"
   include_recipe "jenkins::proxy_apache2"
 end
 
-
 execute "setup-projects" do
-  ["guardian.xml"].each do |project|
-    command "wget -qO- #{node[:jenkins][:jobs][:config_url]}/#{project} | /usr/bin/java -jar /home/jenkins/jenkins-cli.jar -s #{node[:jenkins][:http_proxy][:host_name]} create-job"
+  ["guardian"].each do |project|
+    command "wget -qO- #{node[:jenkins][:jobs][:config_url]}/#{project}.xml | /usr/bin/java -jar /home/jenkins/jenkins-cli.jar -s http://#{node[:jenkins][:http_proxy][:host_name]} create-job"
+    creates "/var/lib/jenkins/jobs/#{project}/config.xml"
   end
+end
+
+template "#{node[:jenkins][:server][:home]}/.ssh/config" do
+  source      "jenkins.ssh.config.erb"
+  owner       'jenkins'
+  group       'jenkins'
+  mode        '0600'
 end
