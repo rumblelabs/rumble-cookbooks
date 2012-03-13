@@ -19,17 +19,22 @@ if node.platform == "ubuntu"
     # notifies :install, "package[jenkins]", :immediately
     notifies :install, resources(:package => "jenkins"), :immediately
 
-    command "cd /usr/share/jenkins && wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war && mv jenkins.war.1 jenkins.war"
+    # command "cd /usr/share/jenkins && wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war && mv jenkins.war.1 jenkins.war"
 
     unless install_starts_service
       #notifies :start, "service[jenkins]", :immediately
       # notifies :start, resources(:service => "jenkins"), :immediately
     end
     #notifies :create, "ruby_block[block_until_operational]", :immediately
-    notifies :create, resources(:ruby_block => "block_until_operational"), :immediately
+    #notifies :create, resources(:ruby_block => "block_until_operational"), :immediately
     creates "/usr/share/jenkins/jenkins.war"
   end
 end
+
+log "update jenkins" do
+  command "cd /usr/share/jenkins && wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war && mv jenkins.war.1 jenkins.war"
+end
+
 
 template "/etc/init/jenkins.conf" do
   source      "jenkins.conf.erb"
