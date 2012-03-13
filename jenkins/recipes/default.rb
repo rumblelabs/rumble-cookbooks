@@ -58,6 +58,11 @@ template "/var/lib/jenkins/hudson.model.UpdateCenter.xml" do
 end
 
 
+remote_file "/var/lib/jenkins/updates/default.json" do
+  source "http://guardian.rumblelabs.com/jenkins-update-centre.json"
+  mode "0644"
+end
+
 
 log "start-jenkins" do
   notifies :start, resources(:service => "jenkins"), :immediately
