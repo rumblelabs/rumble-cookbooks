@@ -65,15 +65,15 @@ directory "/var/lib/jenkins/updates" do
   action :create
 end
 
-remote_file "/var/lib/jenkins/updates/default.json" do
-  source "http://guardian.rumblelabs.com/jenkins-update-centre.json"
-  mode "0644"
-end
-
 
 log "start-jenkins" do
   notifies :start, resources(:service => "jenkins"), :immediately
   notifies :create, resources(:ruby_block => "block_until_operational"), :immediately  
+end
+
+remote_file "/var/lib/jenkins/updates/default.json" do
+  source "http://guardian.rumblelabs.com/jenkins-update-centre.json"
+  mode "0644"
 end
 
 jenkins_cli "reload-configuration"
