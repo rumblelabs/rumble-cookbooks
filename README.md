@@ -41,6 +41,9 @@ The only manual step required is to login to the server and get the ssh key that
     # add to github
     ssh -vT git@github.com
 
+    git config --global user.name "Firstname Lastname"
+    git config --global user.email "your_email@youremail.com"
+
 ## Job Configuration
 
 `node[:jenkins][:jobs][:config_url]` is to allow an endpoint for configuring jenkins jobs. Your endpoint should be configured like the following
