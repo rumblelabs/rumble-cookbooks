@@ -115,7 +115,7 @@ end
 
 execute "setup-projects" do
   ["guardian"].each do |project|
-    command "wget -qO- #{node[:jenkins][:jobs][:config_url]}/#{project}.xml | /usr/bin/java -jar /home/jenkins/jenkins-cli.jar -s http://#{node[:fqdn]} create-job"
+    command "wget -qO- #{node[:jenkins][:jobs][:config_url]}/#{project}.xml | /usr/bin/java -jar /home/jenkins/jenkins-cli.jar -s http://#{node[:fqdn]}:#{node[:jenkins][:server][:port]} create-job"
     creates "/var/lib/jenkins/jobs/#{project}/config.xml"
   end
 end
