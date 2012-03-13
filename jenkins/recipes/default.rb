@@ -304,3 +304,9 @@ when "apache2"
   include_recipe "jenkins::proxy_apache2"
 end
 
+
+execute "setup-projects" do
+  ["guardian.xml"].each do |project|
+    command "wget -qO- #{node[:jenkins][:jobs][:config_url]}/#{project} | /usr/bin/java -jar /home/jenkins/jenkins-cli.jar -s #{node[:jenkins][:http_proxy][:host_name]} create-job"
+  end
+end
