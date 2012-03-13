@@ -169,3 +169,7 @@ template "#{node[:jenkins][:server][:home]}/.ssh/config" do
   group       'jenkins'
   mode        '0600'
 end
+
+log "restart-jenkins" do
+  notifies :restart, resources(:service => "jenkins"), :immediately
+end
