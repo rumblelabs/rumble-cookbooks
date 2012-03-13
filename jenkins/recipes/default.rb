@@ -82,6 +82,19 @@ execute "update-jenkins-plugin-data" do
   command "curl -X POST -H 'Accept: application/json' -d @/var/lib/jenkins/updates/default.json http://#{node[:fqdn]}:#{node[:jenkins][:server][:port]}/updateCenter/byId/default/postBack"
 end
 
+template "/var/lib/jenkins/.rvmrc" do
+  source      "jenkins.rvmrc.erb"
+  owner       'jenkins'
+  group       'jenkins'
+  mode        '0644'
+end
+
+template "/var/lib/jenkins/.bashrc" do
+  source      "jenkins.bashrc.erb"
+  owner       'jenkins'
+  group       'jenkins'
+  mode        '0644'
+end
 
 # jenkins_cli "reload-configuration"
 
