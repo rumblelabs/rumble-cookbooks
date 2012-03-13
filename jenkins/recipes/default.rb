@@ -21,10 +21,10 @@ if node.platform == "ubuntu"
 
     #command "cd /usr/share/jenkins && wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war && mv jenkins.war.1 jenkins.war"
     
-    #unless install_starts_service
+    unless install_starts_service
       #notifies :start, "service[jenkins]", :immediately
       notifies :start, resources(:service => "jenkins"), :immediately
-    #end
+    end
     #notifies :create, "ruby_block[block_until_operational]", :immediately
     notifies :create, resources(:ruby_block => "block_until_operational"), :immediately
     creates "/usr/share/jenkins/jenkins.war"
