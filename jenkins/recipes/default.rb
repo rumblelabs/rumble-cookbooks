@@ -19,16 +19,32 @@ if node.platform == "ubuntu"
     # notifies :install, "package[jenkins]", :immediately
     notifies :install, resources(:package => "jenkins"), :immediately
 
-    #command "cd /usr/share/jenkins && wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war && mv jenkins.war.1 jenkins.war"
-    
+    command "cd /usr/share/jenkins && wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war && mv jenkins.war.1 jenkins.war"
+
     unless install_starts_service
       #notifies :start, "service[jenkins]", :immediately
-      notifies :start, resources(:service => "jenkins"), :immediately
+      # notifies :start, resources(:service => "jenkins"), :immediately
     end
     #notifies :create, "ruby_block[block_until_operational]", :immediately
     notifies :create, resources(:ruby_block => "block_until_operational"), :immediately
     creates "/usr/share/jenkins/jenkins.war"
   end
+end
+
+execute "configure-jenkins" do
+  template "/etc/init/jenkins.conf" do
+    source      "jenkins.conf.erb"
+    owner       'root'
+    group       'root'
+    mode        '0644'
+    variables(
+      :jenkins_home     => node[:jenkins][:server][:home],
+      :java_home        => node[:jenkins][:java_home]
+    )
+  end
+  notifies :restart, resources(:service => "jenkins"), :immediately
+  notifies :create, resources(:ruby_block => "block_until_operational"), :immediately
+  creates "/etc/init/jenkins.conf"
 end
 
   #http_request "HEAD #{remote}" do
