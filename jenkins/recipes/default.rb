@@ -73,6 +73,7 @@ end
 
 log "start-jenkins" do
   notifies :start, resources(:service => "jenkins"), :immediately
+  notifies :create, resources(:ruby_block => "block_until_operational"), :immediately  
 end
 
 jenkins_cli "reload-configuration"
