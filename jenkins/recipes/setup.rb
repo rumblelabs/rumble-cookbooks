@@ -78,8 +78,8 @@ end
 #   end
 # end
 
-case node.platform
-when "ubuntu"
+# case node.platform
+# when "ubuntu"
   include_recipe "apt"
   # include_recipe "java"
   package "openjdk-6-dbg"
@@ -98,10 +98,12 @@ when "ubuntu"
   package "nodejs"
   package "autoconf"
 
+  include_recipe "mysql::server"
+
   #apt_repository "jenkins" do
   #  uri "http://pkg.jenkins-ci.org/debian"
   #  key "http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key"
   #  components ["binary/"]
   #  action :add
   #end
-end
+#end
