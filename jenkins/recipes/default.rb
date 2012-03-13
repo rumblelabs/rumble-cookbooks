@@ -1,3 +1,8 @@
+execute "install-rvm" do
+  command "sudo -u jenkins bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer)"
+end
+
+
 install_starts_service = true
 include_recipe "jenkins::jenkins"
 
