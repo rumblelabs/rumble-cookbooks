@@ -48,7 +48,7 @@ template "/var/lib/jenkins/hudson.model.UpdateCenter.xml" do
   group       'jenkins'
   mode        '0644'
   variables(
-    :update_centre     => default[:jenkins][:update_centre]
+    :update_centre     => node[:jenkins][:update_centre]
   )
 end
 
