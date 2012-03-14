@@ -1,9 +1,9 @@
-bash "installing rvm for jenkins" do
-  user "jenkins"
-  code "bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer)"
-  not_if "test -e /var/lib/jenkins/.rvm"
-end
-
+# bash "installing rvm for jenkins" do
+#   user "jenkins"
+#   code "bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer)"
+#   not_if "test -e /var/lib/jenkins/.rvm"
+# end
+# 
 install_starts_service = true
 include_recipe "jenkins::jenkins"
 
