@@ -1,9 +1,18 @@
-execute "install rvm" do
+
+bash "install_something" do
   user "jenkins"
   group "jenkins"
-  command "bash -s stable < <(curl -sk https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer)"
-  #simulate_initial_login true
+  cwd "/tmp"
+  code "bash -s stable < <(curl -sk https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer)"
+  action :run
+  environment ({'HOME' => '/var/lib/jenkins'})
 end
+
+# execute "install rvm" do
+#   user "jenkins"
+#   group "jenkins"
+#   command ""
+# end
 
 include_recipe "jenkins::jenkins"
 
