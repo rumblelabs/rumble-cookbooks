@@ -20,9 +20,20 @@ node[:deploy].each do |application, deploy|
   directory "#{deploy[:deploy_to]}/shared/log" do
     owner "deploy"
     group "www-data"
-    mode  0666
+    mode  0777
     action :create
   end
+
+  file "#{deploy[:deploy_to]}/shared/log/delayed_job.log" do
+    owner "deploy"
+    group "www-data"
+    mode  0666
+    action :create
+    not_if do
+      File.exists?("#{deploy[:deploy_to]}/shared/log/delayed_job.log")
+    end
+  end
+  
 
   file "#{deploy[:deploy_to]}/shared/log/#{deploy[:rails_env]}.log" do
     owner "deploy"
