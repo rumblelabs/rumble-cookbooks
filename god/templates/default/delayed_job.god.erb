@@ -6,7 +6,7 @@ COMMAND = cmd
 
 God.watch do |w| 
   w.uid = 'deploy'
-  w.gid = 'www-data
+  w.gid = 'www-data'
   w.name = "delayed_job_production"
   w.interval = 15.seconds
   w.start = "#{COMMAND} start > /tmp/delayed_job.log'"
