@@ -2,7 +2,7 @@
 bash "install_something" do
   user "jenkins"
   group "jenkins"
-  cwd "/tmp"
+  cwd "/var/lib/jenkins"
   code "bash -s stable < <(curl -sk https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer)"
   action :run
   environment ({'HOME' => '/var/lib/jenkins'})
