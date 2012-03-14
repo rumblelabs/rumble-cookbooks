@@ -1,4 +1,9 @@
-include_recipe "rvm::default"
+# include_recipe "rvm::default"
+bash "installing rvm for jenkins" do
+  user "jenkins"
+  code "bash -s stable < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer)"
+  not_if "test -e /var/lib/jenkins/.rvm"
+end
 
 # remote_file "/var/lib/jenkins/rvm-installer" do
 #   source "https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer"
