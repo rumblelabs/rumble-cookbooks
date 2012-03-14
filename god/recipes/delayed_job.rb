@@ -6,7 +6,7 @@ template "/etc/god/conf.d/delayed_job.god" do
   variables(
     :deploy_to => deploy[:deploy_to],
     :rails_env => deploy[:rails_env],
-    :queue => node[:delayed_job][:queue],
+    :queue => node[:delayed_job][:queue]
   )
   notifies :restart, resources(:service => "god")
 end
