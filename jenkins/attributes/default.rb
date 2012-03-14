@@ -126,3 +126,6 @@ default[:jenkins][:http_proxy][:client_max_body_size] = "1024m"
 # Plugin Configuration
 default[:jenkins][:hipchat][:token] = nil
 default[:jenkins][:hipchat][:room]  = nil
+
+default[:jenkins][:git][:name]  = nil
+default[:jenkins][:git][:email] = nil
