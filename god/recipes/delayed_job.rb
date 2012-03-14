@@ -1,3 +1,12 @@
+# RAILS DEPENDENCIES
+package "libxml2-dev"
+package "libxslt1-dev"
+package "libmagickwand-dev"
+package "nodejs"
+package "autoconf"
+
+
+
 runit_service "god"
 
 node[:deploy].each do |application, deploy|
