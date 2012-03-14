@@ -76,10 +76,12 @@ end
 
 execute "update-jenkins-plugin-data" do
   command "curl -X POST -H 'Accept: application/json' -d @/var/lib/jenkins/updates/default.json http://#{node[:fqdn]}:#{node[:jenkins][:server][:port]}/updateCenter/byId/default/postBack"
-  not_if do
-    File.exists?("/var/lib/jenkins/updates/default.json")
-  end
+  #not_if do
+  #  File.exists?("/var/lib/jenkins/updates/default.json")
+  #end
 end
+
+jenkins_cli "reload-configuration"
 
 template "/var/lib/jenkins/.rvmrc" do
   source      "jenkins.rvmrc.erb"
@@ -114,6 +116,11 @@ include_recipe "jenkins::plugins"
 #   notifies :start, resources(:service => "jenkins"), :immediately
 #   notifies :create, resources(:ruby_block => "block_until_operational"), :immediately
 # end
+
+log "restart-jenkins" do
+  notifies :restart, resources(:service => "jenkins"), :immediately
+  notifies :create, resources(:ruby_block => "block_until_operational"), :immediately  
+end
 template "/var/lib/jenkins/plugins/rvm/WEB-INF/classes/models/rvm_wrapper.rb" do
   source      "rvm_wrapper.rb.erb"
   owner       'jenkins'
@@ -131,9 +138,9 @@ when "apache2"
   include_recipe "jenkins::proxy_apache2"
 end
 
-log "restart-jenkins" do
-  notifies :restart, resources(:service => "jenkins"), :immediately
-end
+#log "restart-jenkins" do
+#  notifies :restart, resources(:service => "jenkins"), :immediately
+#end
 
 
 execute "setup-projects" do
