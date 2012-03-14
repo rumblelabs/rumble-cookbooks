@@ -141,7 +141,10 @@ end
 #log "restart-jenkins" do
 #  notifies :restart, resources(:service => "jenkins"), :immediately
 #end
-
+log "restart-jenkins" do
+  notifies :restart, resources(:service => "jenkins"), :immediately
+  notifies :create, resources(:ruby_block => "block_until_operational"), :immediately  
+end
 
 execute "setup-projects" do
   ["guardian"].each do |project|
