@@ -1,16 +1,11 @@
-remote_file "/var/lib/jenkins/rvm-installer" do
-  source "https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer"
-  owner "jenkins"
-  group "jenkins"
-  mode "0755"
-end
+include_recipe "rvm::default"
 
-execute "install-rvm" do
-  unless File.exists?("/var/lib/jenkins/.rvm")
-    command "sudo -u jenkins && cd /var/lib/jenkins && ./rvm-installer"
-  end
-end
-
+# remote_file "/var/lib/jenkins/rvm-installer" do
+#   source "https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer"
+#   owner "jenkins"
+#   group "jenkins"
+#   mode "0755"
+# end
 
 install_starts_service = true
 include_recipe "jenkins::jenkins"
