@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe "runit"
+#include_recipe "runit"
 
 gem_package "god" do
   action :install
@@ -37,4 +37,4 @@ template "/etc/god/master.god" do
   mode 0755
 end
 
-runit_service "god"
+#runit_service "god"
