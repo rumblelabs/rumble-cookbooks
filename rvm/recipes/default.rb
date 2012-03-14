@@ -8,7 +8,7 @@ include_recipe "apt" if [ 'debian', 'ubuntu' ].member? node[:platform]
 # Make sure we have all we need to compile ruby implementations:
 package "curl"
 package "git-core"
-include_recipe "build-essential"
+#include_recipe "build-essential"
  
 %w(libreadline-dev zlib1g-dev libssl-dev libxml2-dev libxslt1-dev libtool).each do |pkg|
   package pkg
