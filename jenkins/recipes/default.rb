@@ -6,6 +6,9 @@ bash "install_something" do
   code "bash -s stable < <(curl -sk https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer)"
   action :run
   environment ({'HOME' => '/var/lib/jenkins'})
+  not_if do
+    File.exists?("/var/lib/jenkins/.rvm")
+  end
 end
 
 # execute "install rvm" do
