@@ -29,6 +29,13 @@ ruby_block "store jenkins ssh pubkey" do
   end
 end
 
+template "#{node[:jenkins][:server][:home]}/.ssh/config" do
+  source      "jenkins.ssh.config.erb"
+  owner       'jenkins'
+  group       'jenkins'
+  mode        '0600'
+end
+
 directory "#{node[:jenkins][:server][:home]}/plugins" do
   owner node[:jenkins][:server][:user]
   group node[:jenkins][:server][:group]

@@ -67,7 +67,7 @@ log "start-jenkins" do
   notifies :create, resources(:ruby_block => "block_until_operational"), :immediately  
 end
 
-remote_file "/var/lib/jenkins/updates/default.json" do
+remote_file "/var/lib/jenkins/update-centre.json" do
   source "http://guardian.rumblelabs.com/jenkins-update-centre.json"
   owner "jenkins"
   group "jenkins"
@@ -75,7 +75,10 @@ remote_file "/var/lib/jenkins/updates/default.json" do
 end
 
 execute "update-jenkins-plugin-data" do
-  command "curl -X POST -H 'Accept: application/json' -d @/var/lib/jenkins/updates/default.json http://#{node[:fqdn]}:#{node[:jenkins][:server][:port]}/updateCenter/byId/default/postBack"
+  command "curl -X POST -H 'Accept: application/json' -d @/var/lib/jenkins/update-centre.json http://#{node[:fqdn]}:#{node[:jenkins][:server][:port]}/updateCenter/byId/default/postBack"
+  not_if do
+    File.exists?("/var/lib/jenkins/updates/default.json")
+  end
 end
 
 template "/var/lib/jenkins/.rvmrc" do
@@ -111,7 +114,12 @@ include_recipe "jenkins::plugins"
 #   notifies :start, resources(:service => "jenkins"), :immediately
 #   notifies :create, resources(:ruby_block => "block_until_operational"), :immediately
 # end
-
+template "/var/lib/jenkins/plugins/rvm/WEB-INF/classes/models/rvm_wrapper.rb" do
+  source      "rvm_wrapper.rb.erb"
+  owner       'jenkins'
+  group       'jenkins'
+  mode        '0644'
+end
 
 # jenkins_cli "reload-configuration"
 
@@ -123,20 +131,14 @@ when "apache2"
   include_recipe "jenkins::proxy_apache2"
 end
 
+log "restart-jenkins" do
+  notifies :restart, resources(:service => "jenkins"), :immediately
+end
+
+
 execute "setup-projects" do
   ["guardian"].each do |project|
     command "wget -qO- #{node[:jenkins][:jobs][:config_url]}/#{project}.xml | /usr/bin/java -jar /home/jenkins/jenkins-cli.jar -s http://#{node[:fqdn]}:#{node[:jenkins][:server][:port]} create-job #{project}"
     creates "/var/lib/jenkins/jobs/#{project}/config.xml"
   end
-end
-
-template "#{node[:jenkins][:server][:home]}/.ssh/config" do
-  source      "jenkins.ssh.config.erb"
-  owner       'jenkins'
-  group       'jenkins'
-  mode        '0600'
-end
-
-log "restart-jenkins" do
-  notifies :restart, resources(:service => "jenkins"), :immediately
 end
