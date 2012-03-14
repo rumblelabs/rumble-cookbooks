@@ -8,7 +8,7 @@ God.watch do |w|
   w.name = "delayed_job_production"
   w.interval = 15.seconds
   w.start = "#{COMMAND} start > /tmp/delayed_job.log'"
-  w.start = "#{COMMAND} stop'"
+  w.stop = "#{COMMAND} stop'"
   w.log = "<%= @deploy_to %>/shared/log/god_delayed_job.log"
   w.start_grace = 30.seconds 
   w.restart_grace = 30.seconds 
