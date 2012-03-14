@@ -1,3 +1,5 @@
+runit_service "god"
+
 node[:deploy].each do |application, deploy|
   next unless node[:delayed_job][:applications].include?(application)
   template "/etc/god/conf.d/delayed_job.god" do
