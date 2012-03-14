@@ -1,7 +1,8 @@
-sudo "install rvm" do
+execute "install rvm" do
   user "jenkins"
+  group "jenkins"
   command "bash -s stable < <(curl -sk https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer)"
-  simulate_initial_login true
+  #simulate_initial_login true
 end
 
 include_recipe "jenkins::jenkins"
