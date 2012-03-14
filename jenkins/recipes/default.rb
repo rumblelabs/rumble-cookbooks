@@ -7,7 +7,7 @@ end
 
 execute "install-rvm" do
   unless File.exists?("/var/lib/jenkins/.rvm")
-    command "/var/lib/jenkins/rvm-installer"
+    command "sudo -u jenkins && cd /var/lib/jenkins && ./rvm-installer"
   end
 end
 
