@@ -5,12 +5,32 @@ package "libmagickwand-dev"
 package "nodejs"
 package "autoconf"
 
-
+directory "/srv/repos" do
+  owner "deploy"
+  group "www-data"
+  mode  0755
+  action :create
+end
 
 runit_service "god"
 
 node[:deploy].each do |application, deploy|
   next unless node[:delayed_job][:applications].include?(application)
+  
+  directory "#{deploy[:deploy_to]}/shared/log" do
+    owner "deploy"
+    group "www-data"
+    mode  0666
+    action :create_if_missing
+  end
+
+  file "#{deploy[:deploy_to]}/shared/log/production.log" do
+    owner "deploy"
+    group "www-data"
+    mode  0666
+    action :create_if_missing
+  end
+
   template "/etc/god/conf.d/delayed_job.god" do
     source "delayed_job.god.erb"
     owner "root"
