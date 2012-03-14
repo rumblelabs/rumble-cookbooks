@@ -21,14 +21,17 @@ node[:deploy].each do |application, deploy|
     owner "deploy"
     group "www-data"
     mode  0666
-    action :create_if_missing
+    action :create
   end
 
-  file "#{deploy[:deploy_to]}/shared/log/production.log" do
+  file "#{deploy[:deploy_to]}/shared/log/#{deploy[:rails_env]}.log" do
     owner "deploy"
     group "www-data"
     mode  0666
-    action :create_if_missing
+    action :create
+    not_if do
+      File.exists?("#{deploy[:deploy_to]}/shared/log/#{deploy[:rails_env]}.log")
+    end
   end
 
   template "/etc/god/conf.d/delayed_job.god" do
