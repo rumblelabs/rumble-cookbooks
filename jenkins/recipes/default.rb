@@ -117,16 +117,21 @@ include_recipe "jenkins::plugins"
 #   notifies :create, resources(:ruby_block => "block_until_operational"), :immediately
 # end
 
-log "restart-jenkins" do
-  notifies :restart, resources(:service => "jenkins"), :immediately
-  notifies :create, resources(:ruby_block => "block_until_operational"), :immediately  
-end
 template "/var/lib/jenkins/plugins/rvm/WEB-INF/classes/models/rvm_wrapper.rb" do
   source      "rvm_wrapper.rb.erb"
   owner       'jenkins'
   group       'jenkins'
   mode        '0644'
 end
+
+
+log "restart-jenkins" do
+  notifies :stop, resources(:service => "jenkins"), :immediately
+  notifies :create, resources(:ruby_block => "netstat"), :immediately
+  notifies :start, resources(:service => "jenkins"), :immediately
+  notifies :create, resources(:ruby_block => "block_until_operational"), :immediately
+end
+
 
 # jenkins_cli "reload-configuration"
 
@@ -142,8 +147,10 @@ end
 #  notifies :restart, resources(:service => "jenkins"), :immediately
 #end
 log "restart-jenkins" do
-  notifies :restart, resources(:service => "jenkins"), :immediately
-  notifies :create, resources(:ruby_block => "block_until_operational"), :immediately  
+  notifies :stop, resources(:service => "jenkins"), :immediately
+  notifies :create, resources(:ruby_block => "netstat"), :immediately
+  notifies :start, resources(:service => "jenkins"), :immediately
+  notifies :create, resources(:ruby_block => "block_until_operational"), :immediately
 end
 
 execute "setup-projects" do
