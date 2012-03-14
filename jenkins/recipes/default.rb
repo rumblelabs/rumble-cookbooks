@@ -67,7 +67,7 @@ log "start-jenkins" do
   notifies :create, resources(:ruby_block => "block_until_operational"), :immediately  
 end
 
-remote_file "/var/lib/jenkins/update-centre.json" do
+remote_file "/var/lib/jenkins/updates/default.json" do
   source "http://guardian.rumblelabs.com/jenkins-update-centre.json"
   owner "jenkins"
   group "jenkins"
@@ -75,7 +75,7 @@ remote_file "/var/lib/jenkins/update-centre.json" do
 end
 
 execute "update-jenkins-plugin-data" do
-  command "curl -X POST -H 'Accept: application/json' -d @/var/lib/jenkins/update-centre.json http://#{node[:fqdn]}:#{node[:jenkins][:server][:port]}/updateCenter/byId/default/postBack"
+  command "curl -X POST -H 'Accept: application/json' -d @/var/lib/jenkins/updates/default.json http://#{node[:fqdn]}:#{node[:jenkins][:server][:port]}/updateCenter/byId/default/postBack"
   not_if do
     File.exists?("/var/lib/jenkins/updates/default.json")
   end
