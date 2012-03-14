@@ -45,6 +45,7 @@ node[:deploy].each do |application, deploy|
     end
   end
 
+
   template "/etc/god/conf.d/delayed_job.god" do
     source "delayed_job.god.erb"
     owner "root"
