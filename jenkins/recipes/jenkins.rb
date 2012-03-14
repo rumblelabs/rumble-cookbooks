@@ -1,5 +1,4 @@
 pid_file = "/var/run/jenkins/jenkins.pid"
-install_starts_service = false
 
 #"jenkins stop" may (likely) exit before the process is actually dead
 #so we sleep until nothing is listening on jenkins.server.port (according to netstat)
