@@ -4,14 +4,15 @@ These chef cookbooks are designed (so far) for use with scalarium to get a jenki
 
 1. Setup a new **cloud**
 2. Setup a new application (no deployable asset)
-3. Add this as the custom cookbooks URL.
+3. Add this repo as the custom cookbooks URL.
 4. Define custom JSON.
 5. Create an instance
 6. Add custom deploy recipe `jenkins::default`
 7. Update cookbooks
 8. Deploy
 9. Configure SSH (see below)
-10. Test!
+10. Configure DNS
+11. Test!
 
 ```json
 {
@@ -41,8 +42,7 @@ The only manual step required is to login to the server and get the ssh key that
     # add to github
     ssh -vT git@github.com
 
-    git config --global user.name "Firstname Lastname"
-    git config --global user.email "your_email@youremail.com"
+After that you will need to get the DNS address provided by AWS from the scalarium instance page and configure your **host_name** to point to there.
 
 ## Job Configuration
 
