@@ -47,12 +47,12 @@ end
 #  mode 0755
 #end
 
-cookbook_file "/usr/local/rvm/bin/rvm-gem.sh" do
-  owner "root"
-  group "root"
-  mode 0755
-end
+#cookbook_file "/usr/local/rvm/bin/rvm-gem.sh" do
+#  owner "root"
+#  group "root"
+#  mode 0755
+#end
 
 # set this for compatibilty with other people's recipes
-node.default[:languages][:ruby][:ruby_bin] = find_ruby
+# node.default[:languages][:ruby][:ruby_bin] = find_ruby
 
