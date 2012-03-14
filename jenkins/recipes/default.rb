@@ -118,9 +118,8 @@ include_recipe "jenkins::plugins"
 # end
 
 log "restart-jenkins" do
-  notifies :stop, resources(:service => "jenkins"), :immediately
+  notifies :restart, resources(:service => "jenkins"), :immediately
   notifies :create, resources(:ruby_block => "netstat"), :immediately
-  notifies :start, resources(:service => "jenkins"), :immediately
   notifies :create, resources(:ruby_block => "block_until_operational"), :immediately
 end
 
