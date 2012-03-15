@@ -59,12 +59,12 @@ node[:deploy].each do |application, deploy|
     #notifies :restart, resources(:service => "god")
   end
 
-  execute "stop god" do
-    command "killall -9 god"
-  end
-
-  execute "start god" do
-    command "god -c /etc/god/master.god"
-  end
+  #execute "stop god" do
+  #  command "killall -9 god"
+  #end
+  #
+  #execute "start god" do
+  #  command "god -c /etc/god/master.god"
+  #end
 
 end
