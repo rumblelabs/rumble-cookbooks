@@ -9,4 +9,8 @@ node[:deploy].each do |application, deploy|
     command "ln -s #{deploy[:deploy_to]}/shared/.env #{deploy[:deploy_to]}/current/.env"
   end
 
+  execute "restart delayed job" do
+    command "god restart delayed_job_production"
+  end
+
 end
