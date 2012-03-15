@@ -12,7 +12,7 @@ directory "/srv/repos" do
   action :create
 end
 
-runit_service "god"
+# runit_service "god"
 
 node[:deploy].each do |application, deploy|
   next unless node[:delayed_job][:applications].include?(application)
@@ -56,6 +56,15 @@ node[:deploy].each do |application, deploy|
       :rails_env => deploy[:rails_env],
       :queue => node[:delayed_job][:queue]
     )
-    notifies :restart, resources(:service => "god")
+    #notifies :restart, resources(:service => "god")
   end
+
+  execute "stop god" do
+    command "killall -9 god"
+  end
+
+  execute "start god" do
+    command "god -c /etc/god/master.god"
+  end
+
 end
