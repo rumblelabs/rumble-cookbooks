@@ -151,7 +151,8 @@ log "restart-jenkins" do
 end
 
 execute "setup-projects" do
-  ["guardian"].each do |project|
+  ci_enabled_projects = command "wget -qO- #{node[:jenkins][:jobs][:config_url]}.json"
+  ci_enabled_projects.each do |project|
     command "wget -qO- #{node[:jenkins][:jobs][:config_url]}/#{project}.xml | /usr/bin/java -jar /home/jenkins/jenkins-cli.jar -s http://#{node[:fqdn]}:#{node[:jenkins][:server][:port]} create-job #{project}"
     creates "/var/lib/jenkins/jobs/#{project}/config.xml"
   end
