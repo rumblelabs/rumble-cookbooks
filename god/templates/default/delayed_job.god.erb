@@ -1,7 +1,7 @@
 cmd =  "/bin/bash -c 'cd <%= @deploy_to %>/current; "
 cmd << "export $(cat <%= @deploy_to %>/current/.env); "
 cmd << "/usr/bin/env RAILS_ENV=<%= @rails_env %> "
-cmd << "QUEUES=<%= @queue %> <%= @deploy_to %>/current/script/delayed_job"
+cmd << "<%= @deploy_to %>/current/script/delayed_job --queue=<%= @queue %>"
 COMMAND = cmd
 
 God.watch do |w| 
