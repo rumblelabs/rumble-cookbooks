@@ -37,8 +37,4 @@ template "/etc/god/master.god" do
   mode 0755
 end
 
-runit_service "god"
-
-service :god do
-  action :start
-end
+# runit_service "god"

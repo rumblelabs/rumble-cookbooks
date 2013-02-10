@@ -9,6 +9,13 @@ node[:deploy].each do |application, deploy|
     command "ln -s #{deploy[:deploy_to]}/shared/.env #{deploy[:deploy_to]}/current/.env"
   end
 
+  execute "start god" do
+    command "sudo god -c /etc/god/master.god"
+    not_if do
+      `ps xU root | grep god` =~ /ruby/
+    end
+  end
+
   execute "restart delayed job" do
     command "god restart delayed_job_production"
   end
