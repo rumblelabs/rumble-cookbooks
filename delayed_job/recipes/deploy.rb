@@ -1,6 +1,8 @@
 node[:deploy].each do |application, deploy|
   next unless node[:delayed_job][:applications].include?(application)
 
+  # Hack to start "god". scalarium/example-cookbooks show using runit which
+  # I could not get working, so lets do this. Even in a hacky way.
   execute "start god" do
     command "sudo god -c /etc/god/master.god"
     not_if do
@@ -20,6 +22,8 @@ node[:deploy].each do |application, deploy|
     command "god restart delayed_job_production"
   end
 
+  # Stop nginx, we have to use nginx or apache based on scalarium deploy recipes
+  # using nginx we remove dependency on passenger.
   service "nginx" do
     # supports :status => true, :restart => true, :reload => true
     action :stop
