@@ -13,4 +13,9 @@ node[:deploy].each do |application, deploy|
     command "god restart delayed_job_production"
   end
 
+  service "nginx" do
+    # supports :status => true, :restart => true, :reload => true
+    action :stop
+  end
+
 end
