@@ -38,3 +38,7 @@ template "/etc/god/master.god" do
 end
 
 runit_service "god"
+
+service :god do
+  action :start
+end
